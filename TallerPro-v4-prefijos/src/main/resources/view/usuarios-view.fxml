@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import com.ejemplo.tallerpro.util.PaginadorBusqueda?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ejemplo.tallerpro.controller.UsuariosController"
+      spacing="14.0">
+    <padding><Insets top="24.0" right="28.0" bottom="10.0" left="28.0"/></padding>
+
+    <VBox spacing="2.0">
+        <Label text="Usuarios" styleClass="pagina-titulo"/>
+    </VBox>
+
+    <VBox styleClass="tarjeta" spacing="12.0">
+        <Label text="Nuevo usuario" styleClass="tarjeta-titulo"/>
+        <FlowPane hgap="10.0" vgap="8.0" alignment="CENTER_LEFT">
+            <TextField fx:id="txtNombre" promptText="Nombre completo" prefWidth="200.0"/>
+            <TextField fx:id="txtUsuario" promptText="Usuario" prefWidth="160.0"/>
+            <PasswordField fx:id="pwdClave" promptText="Contraseña (mín. 10)" prefWidth="180.0"/>
+            <ComboBox fx:id="cmbRol" prefWidth="150.0"/>
+            <Button text="Crear usuario" onAction="#onCrear" minWidth="-Infinity"
+                    styleClass="accent,accion-principal"/>
+        </FlowPane>
+    </VBox>
+
+    <VBox styleClass="tarjeta" spacing="10.0" VBox.vgrow="ALWAYS">
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Usuarios registrados" styleClass="tarjeta-titulo"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <TextField fx:id="txtBuscar" promptText="Nombre o usuario"/>
+        </HBox>
+        <TableView fx:id="tabla" VBox.vgrow="ALWAYS" styleClass="striped">
+            <columns>
+                <TableColumn fx:id="colId" text="ID" prefWidth="60.0"/>
+                <TableColumn fx:id="colNombre" text="Nombre" prefWidth="260.0"/>
+                <TableColumn fx:id="colUsuario" text="Usuario" prefWidth="180.0"/>
+                <TableColumn fx:id="colRol" text="Rol" prefWidth="160.0"/>
+            </columns>
+        </TableView>
+        <PaginadorBusqueda fx:id="paginador"/>
+        <HBox>
+            <Button text="Eliminar seleccionado" onAction="#onEliminar" styleClass="danger"/>
+        </HBox>
+    </VBox>
+
+    <HBox styleClass="barra-estado">
+        <padding><Insets top="8.0" right="4.0" bottom="8.0" left="4.0"/></padding>
+        <Label fx:id="lblEstado" text="Listo."/>
+    </HBox>
+</VBox>

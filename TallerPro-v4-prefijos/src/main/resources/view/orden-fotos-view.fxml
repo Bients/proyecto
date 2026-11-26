@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import com.ejemplo.tallerpro.util.PaginadorBusqueda?>
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:id="raiz" fx:controller="com.ejemplo.tallerpro.controller.OrdenFotosController"
+      spacing="5" styleClass="tarjeta,galeria-fotos">
+    <FlowPane hgap="7" vgap="5" alignment="CENTER_LEFT">
+        <ComboBox fx:id="cmbFase" accessibleText="Fase de fotos"/>
+        <Button fx:id="btnAgregar" text="Agregar fotos" onAction="#onAgregar"
+                minWidth="-Infinity" styleClass="accent,accion-principal">
+            <tooltip><Tooltip text="También puedes arrastrar imágenes aquí. Hasta 20 MB por archivo."/></tooltip>
+        </Button>
+        <MenuButton fx:id="btnExportar" text="Exportar" minWidth="-Infinity" styleClass="accion-secundaria">
+            <items>
+                <MenuItem text="A una carpeta" onAction="#onCarpeta"/>
+                <MenuItem text="A un ZIP" onAction="#onZip"/>
+            </items>
+        </MenuButton>
+    </FlowPane>
+    <ScrollPane fx:id="desplazamiento" fitToWidth="true" hbarPolicy="NEVER" minHeight="90" VBox.vgrow="ALWAYS">
+        <FlowPane fx:id="galeria" hgap="6" vgap="6"/>
+    </ScrollPane>
+    <PaginadorBusqueda fx:id="paginador"/>
+    <Label fx:id="aviso" wrapText="true" styleClass="pagina-sub" visible="false" managed="false"/>
+</VBox>

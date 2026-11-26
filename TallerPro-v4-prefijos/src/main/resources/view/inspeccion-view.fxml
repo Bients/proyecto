@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import com.ejemplo.tallerpro.util.ComboBuscable?>
+<?import com.ejemplo.tallerpro.util.DiagramaInspeccion?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:id="raiz" fx:controller="com.ejemplo.tallerpro.controller.InspeccionController" spacing="8" styleClass="inspeccion-vista">
+    <padding><Insets top="12" right="15" bottom="10" left="15"/></padding>
+    <Label text="Inspección" styleClass="pagina-titulo"/>
+    <FlowPane hgap="8" vgap="6">
+        <ComboBuscable fx:id="txtBuscar" prefWidth="324" promptText="Busca cliente por nombre, DNI o teléfono"/>
+        <Label fx:id="lblVehiculo" styleClass="tarjeta-titulo" wrapText="true"/>
+    </FlowPane>
+    <FlowPane fx:id="vehiculosCliente" hgap="6" vgap="5"/>
+    <FlowPane hgap="6" vgap="5">
+        <Label text="Orden activa"/>
+        <ComboBox fx:id="ordenActual" accessibleText="Orden activa" prefWidth="180"/>
+        <ComboBox fx:id="filtroEstado" accessibleText="Filtrar por estado" prefWidth="205"/>
+        <ComboBox fx:id="filtroCapa" accessibleText="Filtrar por capa" prefWidth="160"/>
+        <ComboBox fx:id="filtroGravedad" accessibleText="Filtrar por gravedad" prefWidth="177"/>
+        <ComboBox fx:id="filtroOrden" accessibleText="Filtrar por número de orden" prefWidth="168"/>
+        <DatePicker fx:id="filtroDesde" promptText="Desde" prefWidth="112"/>
+        <DatePicker fx:id="filtroHasta" promptText="Hasta" prefWidth="112"/>
+        <Button text="Limpiar filtros" onAction="#limpiarFiltros"/>
+    </FlowPane>
+    <SplitPane dividerPositions="0.64" VBox.vgrow="ALWAYS">
+        <VBox minWidth="260" spacing="6" styleClass="tarjeta">
+            <FlowPane hgap="6" vgap="4">
+                <ComboBox fx:id="cmbVista" accessibleText="Vista de la carrocería" prefWidth="147"/>
+                <Button text="−" accessibleText="Alejar" onAction="#alejar"/>
+                <Button text="+" accessibleText="Acercar" onAction="#acercar"/>
+                <Button text="Ajustar" onAction="#ajustar"/>
+            </FlowPane>
+            <FlowPane fx:id="interruptores" hgap="10" vgap="4"/>
+            <DiagramaInspeccion fx:id="diagrama" VBox.vgrow="ALWAYS"/>
+            <Label fx:id="lblSeleccion" text="Selecciona una zona o un hallazgo." styleClass="pagina-sub" wrapText="true"/>
+        </VBox>
+        <VBox minWidth="235" spacing="6" styleClass="tarjeta">
+            <Label text="Hallazgos" styleClass="tarjeta-titulo"/>
+            <FlowPane hgap="5" vgap="5">
+                <Button fx:id="btnRegistrar" text="Registrar hallazgo" styleClass="accent" onAction="#registrar"/>
+                <Button fx:id="btnEditar" text="Editar" onAction="#editar"/>
+                <Button fx:id="btnConvertir" text="Convertir en partida" onAction="#convertir"/>
+                <Button fx:id="btnFoto" text="Ver foto" onAction="#verFoto"/>
+                <Button fx:id="btnHistorial" text="Historial" onAction="#historial"/>
+                <Button fx:id="btnDescartar" text="Descartar" onAction="#descartar"/>
+            </FlowPane>
+            <ListView fx:id="lista" VBox.vgrow="ALWAYS" minHeight="125"/>
+        </VBox>
+    </SplitPane>
+    <Label fx:id="lblAviso" text="Busca un cliente para comenzar." wrapText="true" styleClass="pagina-sub"/>
+</VBox>

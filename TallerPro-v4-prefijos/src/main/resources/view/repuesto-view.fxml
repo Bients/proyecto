@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import com.ejemplo.tallerpro.util.PaginadorBusqueda?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ejemplo.tallerpro.controller.RepuestoController"
+      spacing="10.0">
+    <padding><Insets top="20.0" right="28.0" bottom="10.0" left="28.0"/></padding>
+
+    <VBox spacing="2.0">
+        <Label text="Inventario de repuestos" styleClass="pagina-titulo"/>
+        <Label text="El saldo se actualiza con los movimientos del kardex"
+               styleClass="pagina-sub"/>
+    </VBox>
+
+    <VBox fx:id="listado" styleClass="tarjeta" spacing="10.0" VBox.vgrow="ALWAYS">
+        <Label text="Repuestos" styleClass="tarjeta-titulo"/>
+        <HBox spacing="10.0" alignment="CENTER_LEFT">
+            <Button fx:id="btnNuevo" text="Nuevo" onAction="#onNuevo" minWidth="-Infinity" styleClass="button-outlined,accion-principal"/>
+                <TextField fx:id="txtBuscar" prefWidth="280.0" promptText="Buscar por nombre o código"/>
+                <CheckBox fx:id="chkBajo" text="Solo stock bajo"/>
+        </HBox>
+        <TableView fx:id="tabla" VBox.vgrow="ALWAYS" minHeight="110" styleClass="striped">
+            <columns>
+                <TableColumn fx:id="colId" text="Código" prefWidth="103.0"/>
+                <TableColumn fx:id="colNombre" text="Repuesto" prefWidth="260.0"/>
+                <TableColumn fx:id="colStock" text="Stock" prefWidth="90.0"/>
+                <TableColumn fx:id="colMinimo" text="Mínimo" prefWidth="90.0"/>
+                <TableColumn fx:id="colPrecio" text="Precio" prefWidth="110.0"/>
+                <TableColumn fx:id="colEstadoStock" text="Estado" prefWidth="120.0"/>
+            </columns>
+        </TableView>
+        <PaginadorBusqueda fx:id="paginador"/>
+    </VBox>
+
+    <VBox fx:id="ficha" styleClass="tarjeta,ficha-datos" spacing="8.0">
+        <Label text="Datos del repuesto" styleClass="tarjeta-titulo"/>
+
+        <GridPane hgap="14.0" vgap="7.0">
+            <columnConstraints>
+                <ColumnConstraints minWidth="90.0"/>
+                <ColumnConstraints prefWidth="240.0"/>
+                <ColumnConstraints minWidth="110.0"/>
+                <ColumnConstraints prefWidth="240.0"/>
+            </columnConstraints>
+
+            <Label text="Repuesto *" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtNombre" promptText="Ej. Filtro de aceite"
+                       GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="Stock" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtStock" editable="false" promptText="Unidades disponibles"
+                       GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="Stock mínimo *" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+            <TextField fx:id="txtMinimo" promptText="Avisar cuando llegue a..."
+                       GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+
+            <Label text="Precio (S/) *" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtPrecio" promptText="Ej. 45.50"
+                       GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            <Label text="SKU" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+            <TextField fx:id="txtSku" promptText="Código opcional" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+            <Label text="Costo promedio" GridPane.rowIndex="3"/>
+            <TextField fx:id="txtCosto" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+        </GridPane>
+
+        <FlowPane hgap="10" vgap="6" alignment="CENTER_LEFT">
+            <Button text="Guardar" onAction="#onGuardar" minWidth="-Infinity" styleClass="accent,accion-principal"/>
+            <Button fx:id="btnAjuste" text="Ajuste de inventario" onAction="#onAjustar" minWidth="-Infinity" styleClass="button-outlined,accion-secundaria"/>
+            <Button fx:id="btnKardex" text="Ver kardex" onAction="#onKardex" minWidth="-Infinity" styleClass="button-outlined,accion-secundaria"/>
+            <Button fx:id="btnEliminar" text="Eliminar" onAction="#onEliminar" minWidth="-Infinity" styleClass="danger,accion-secundaria"/>
+        </FlowPane>
+    </VBox>
+
+    <HBox styleClass="barra-estado">
+        <padding><Insets top="8.0" right="4.0" bottom="8.0" left="4.0"/></padding>
+        <Label fx:id="lblEstado" text="Listo."/>
+    </HBox>
+</VBox>

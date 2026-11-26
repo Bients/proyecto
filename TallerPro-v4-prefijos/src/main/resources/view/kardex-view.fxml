@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import com.ejemplo.tallerpro.util.ComboBuscable?>
+<?import com.ejemplo.tallerpro.util.PaginadorBusqueda?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ejemplo.tallerpro.controller.KardexController" spacing="12">
+    <padding><Insets top="24" right="28" bottom="12" left="28"/></padding>
+    <Label text="Kardex de inventario" styleClass="pagina-titulo"/>
+    <VBox spacing="10" styleClass="tarjeta" VBox.vgrow="ALWAYS">
+        <HBox spacing="8" alignment="CENTER_LEFT">
+            <ComboBuscable fx:id="txtBuscar" promptText="Selecciona un repuesto" prefWidth="300"/>
+            <DatePicker fx:id="dpDesde" promptText="Desde" prefWidth="125"/>
+            <DatePicker fx:id="dpHasta" promptText="Hasta" prefWidth="125"/>
+            <ComboBox fx:id="cmbTipo" prefWidth="190"/>
+        </HBox>
+        <TableView fx:id="tabla" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colFecha" text="Fecha" prefWidth="133"/>
+                <TableColumn fx:id="colTipo" text="Movimiento" prefWidth="143"/>
+                <TableColumn fx:id="colCantidad" text="Cantidad" prefWidth="75"/>
+                <TableColumn fx:id="colSaldo" text="Saldo" prefWidth="60"/>
+                <TableColumn fx:id="colOrigen" text="Referencia" prefWidth="303"/>
+                <TableColumn fx:id="colCosto" text="Costo unit." prefWidth="113"/>
+                <TableColumn fx:id="colUsuario" text="Usuario" prefWidth="95"/>
+                <TableColumn fx:id="colMotivo" text="Motivo" prefWidth="210"/>
+            </columns>
+        </TableView>
+        <PaginadorBusqueda fx:id="paginador"/>
+    </VBox>
+    <Label fx:id="lblEstado" wrapText="true" styleClass="pagina-sub"/>
+</VBox>

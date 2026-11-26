@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+    <root level="WARN">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+    <springProfile name="!pruebas">
+        <springProperty scope="context" name="directorioDatos" source="taller.datos.directorio"/>
+        <appender name="ACTIVIDAD" class="ch.qos.logback.core.FileAppender">
+            <file>${directorioDatos}/actividad.log</file>
+            <append>true</append>
+            <encoder>
+                <charset>UTF-8</charset>
+                <pattern>%d{yyyy-MM-dd HH:mm:ssXXX} %-5level %msg%n</pattern>
+            </encoder>
+        </appender>
+        <logger name="com.ejemplo.tallerpro.util.SesionActual" level="INFO">
+            <appender-ref ref="ACTIVIDAD"/>
+        </logger>
+        <logger name="com.ejemplo.tallerpro.util.Restauracion" level="INFO">
+            <appender-ref ref="ACTIVIDAD"/>
+        </logger>
+        <logger name="com.ejemplo.tallerpro.service.RespaldoService" level="INFO">
+            <appender-ref ref="ACTIVIDAD"/>
+        </logger>
+    </springProfile>
+</configuration>

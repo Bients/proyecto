@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:id="barraGuia" fx:controller="com.ejemplo.tallerpro.controller.GuiaController"
+      visible="false" managed="false" styleClass="guia-instrucciones">
+    <HBox alignment="CENTER_LEFT" spacing="16">
+        <VBox spacing="3" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS" minWidth="180">
+            <Label fx:id="lblPasoGuia" styleClass="tarjeta-titulo" wrapText="true"/>
+            <Label fx:id="lblMensajeGuia" styleClass="pagina-sub" wrapText="true"/>
+        </VBox>
+        <FlowPane fx:id="opcionesIniciales" hgap="8" vgap="4" alignment="CENTER_RIGHT" prefWrapLength="325"
+                  maxWidth="-Infinity" visible="false" managed="false">
+            <Button fx:id="btnEmpezarGuia" text="Empezar guía" onAction="#onEmpezarGuia" minWidth="-Infinity"
+                    styleClass="accent,accion-principal"/>
+            <Button fx:id="btnConozcoGuia" text="Ya lo he usado" onAction="#onOmitirGuia" minWidth="-Infinity"
+                    styleClass="button-outlined,accion-secundaria"/>
+            <Button text="Ahora no" onAction="#onOmitirGuia" minWidth="-Infinity"
+                    styleClass="button-outlined,accion-secundaria"/>
+        </FlowPane>
+        <FlowPane fx:id="controlesGuia" hgap="8" vgap="4" alignment="CENTER_RIGHT" prefWrapLength="325"
+                  maxWidth="-Infinity" visible="false" managed="false">
+            <Button fx:id="btnSiguienteGuia" text="Siguiente" onAction="#onSiguienteGuia" minWidth="-Infinity"
+                    styleClass="accent,accion-principal"/>
+            <Button fx:id="btnAtrasGuia" text="Atrás" onAction="#onAtrasGuia" minWidth="-Infinity"
+                    styleClass="button-outlined,accion-secundaria"/>
+            <Button fx:id="btnSalirGuia" text="Salir de la guía" onAction="#onSalirGuia" minWidth="-Infinity"
+                    styleClass="button-outlined,accion-secundaria"/>
+        </FlowPane>
+    </HBox>
+</VBox>

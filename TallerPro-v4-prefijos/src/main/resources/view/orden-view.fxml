@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import com.ejemplo.tallerpro.util.ComboBuscable?>
+<?import com.ejemplo.tallerpro.util.PaginadorBusqueda?>
+<?import com.ejemplo.tallerpro.util.FiltrosOrdenBusqueda?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:id="vistaOrdenes"
+      fx:controller="com.ejemplo.tallerpro.controller.OrdenController"
+      spacing="12.0">
+    <padding><Insets top="24.0" right="28.0" bottom="10.0" left="28.0"/></padding>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Órdenes de trabajo" styleClass="pagina-titulo"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label fx:id="lblNumeroOrden" styleClass="tarjeta-titulo"/>
+    </HBox>
+
+    <VBox styleClass="tarjeta" spacing="8.0">
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Vehículo"/>
+            <ComboBuscable fx:id="cmbVehiculo" maxWidth="Infinity" HBox.hgrow="ALWAYS"
+                           promptText="Busca la placa del vehículo" accessibleText="Buscar vehículo por placa"/>
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Label text="Estado"/>
+                <ComboBox fx:id="cmbEstado" accessibleText="Estado de la orden"/>
+            </HBox>
+        </HBox>
+        <TextArea fx:id="txtProblema" prefRowCount="2" wrapText="true"
+                  promptText="Motivo de ingreso o falla reportada" accessibleText="Motivo de ingreso"/>
+        <TitledPane fx:id="masDetalles" text="Más detalles" expanded="false" animated="false">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Mecánico"/>
+                <ComboBuscable fx:id="cmbMecanico" promptText="Responsable (opcional)" HBox.hgrow="ALWAYS"/>
+                <Label text="Km de ingreso"/>
+                <TextField fx:id="txtKm" promptText="Vacío = km del vehículo"/>
+            </HBox>
+        </TitledPane>
+
+        <Label fx:id="lblErrores" styleClass="error-resumen" wrapText="true" visible="false" managed="false"/>
+
+        <FlowPane hgap="8" vgap="6" alignment="CENTER_LEFT">
+            <Button fx:id="btnGuardar" text="Guardar" onAction="#onGuardar"
+                    minWidth="-Infinity" styleClass="accent,accion-principal"/>
+            <Button text="Nueva orden" onAction="#onNuevo" minWidth="-Infinity"
+                    styleClass="button-outlined,accion-secundaria"/>
+            <Button fx:id="btnInspeccion" text="Inspección" onAction="#onInspeccion"
+                    minWidth="-Infinity" styleClass="button-outlined,accion-secundaria"/>
+            <Button fx:id="btnPagos" text="Pagos" onAction="#onPagos"
+                    minWidth="-Infinity" styleClass="button-outlined,accion-secundaria"/>
+            <Button fx:id="btnPdf" text="Generar PDF" onAction="#onPdf"
+                    minWidth="-Infinity" styleClass="button-outlined,accion-secundaria"/>
+            <Button fx:id="btnAnular" text="Anular" onAction="#onAnular"
+                    minWidth="-Infinity" styleClass="danger,accion-secundaria"/>
+        </FlowPane>
+    </VBox>
+    <FlowPane fx:id="barraFiltros" hgap="8" vgap="6" alignment="CENTER_LEFT">
+        <TextField fx:id="txtBuscar" prefWidth="180.0" promptText="Buscar órdenes"
+                   accessibleText="Buscar por número, placa, cliente, mecánico o problema"/>
+        <FiltrosOrdenBusqueda fx:id="filtrosBusqueda"/>
+    </FlowPane>
+
+    <SplitPane dividerPositions="0.43" minHeight="0" styleClass="split-orden" VBox.vgrow="ALWAYS">
+        <!-- Lista de órdenes -->
+        <VBox styleClass="tarjeta" spacing="8.0" minWidth="305.0">
+            <Label text="Órdenes registradas" styleClass="tarjeta-titulo"/>
+
+            <TableView fx:id="tabla" VBox.vgrow="ALWAYS" styleClass="striped">
+                <columns>
+                    <TableColumn fx:id="colId" text="N.°" minWidth="70.0" prefWidth="82.0"/>
+                    <TableColumn fx:id="colFecha" text="Ingreso" minWidth="80.0" prefWidth="90.0"/>
+                    <TableColumn fx:id="colPlaca" text="Placa" minWidth="70.0" prefWidth="80.0"/>
+                    <TableColumn fx:id="colCliente" text="Cliente" minWidth="100.0" prefWidth="140.0"/>
+                    <TableColumn fx:id="colEstadoOrden" text="Estado" minWidth="100.0" prefWidth="115.0"/>
+                    <TableColumn fx:id="colMecanico" text="Mecánico" minWidth="90.0" prefWidth="110.0"/>
+                    <TableColumn fx:id="colDias" text="Días" minWidth="45.0" prefWidth="50.0"/>
+                    <TableColumn fx:id="colPago" text="Pago" minWidth="72.0" prefWidth="78.0"/>
+                    <TableColumn fx:id="colTotal" text="Total" minWidth="125.0" prefWidth="135.0"/>
+                </columns>
+            </TableView>
+
+            <PaginadorBusqueda fx:id="paginador"/>
+        </VBox>
+
+        <TabPane fx:id="tabsOrden" minWidth="390.0" tabClosingPolicy="UNAVAILABLE">
+            <Tab text="Detalle">
+                <ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER">
+                <VBox styleClass="tarjeta" spacing="8.0">
+            <Label fx:id="lblOrdenActual" text="Servicios y repuestos" styleClass="tarjeta-titulo" wrapText="true"/>
+            <Label fx:id="lblDatosHistoricos" styleClass="pagina-sub" wrapText="true" minHeight="-Infinity"/>
+            <Label fx:id="lblAviso" styleClass="error-resumen" wrapText="true" visible="false" managed="false"/>
+
+            <VBox fx:id="panelEntrada" spacing="6.0">
+                <FlowPane hgap="6" vgap="6" alignment="CENTER_LEFT">
+                    <ComboBox fx:id="cmbTipo" prefWidth="145.0" minWidth="-Infinity"/>
+
+                    <!-- Servicio: descripción (sugerencias) y precio; sin cantidad -->
+                    <HBox fx:id="filaServicio" spacing="6.0" prefWidth="237.0">
+                        <ComboBox fx:id="cmbServicio" maxWidth="Infinity" promptText="Elegir"
+                                  HBox.hgrow="ALWAYS"/>
+                        <TextField fx:id="txtPrecio" promptText="Precio" prefWidth="100.0" minWidth="-Infinity"/>
+                    </HBox>
+
+                    <!-- Repuesto: solo el inventario (se elige o se busca por nombre) y la cantidad -->
+                    <HBox fx:id="filaRepuesto" spacing="6.0" prefWidth="237.0">
+                        <ComboBuscable fx:id="cmbRepuesto" maxWidth="Infinity"
+                                  promptText="Busca repuesto"
+                                  HBox.hgrow="ALWAYS"/>
+                        <TextField fx:id="txtCantidad" promptText="Cant." prefWidth="60.0"/>
+                    </HBox>
+
+                    <Button text="Agregar" onAction="#onAgregarDetalle" minWidth="-Infinity"
+                            styleClass="accent,accion-principal"/>
+                </FlowPane>
+                <VBox fx:id="filaExterno" spacing="6">
+                    <TextField fx:id="txtExterno" promptText="Descripción del repuesto externo"/>
+                    <HBox spacing="6">
+                        <TextField fx:id="txtExternoCantidad" promptText="Cantidad" prefColumnCount="6"/>
+                        <TextField fx:id="txtExternoCosto" promptText="Costo unitario" prefColumnCount="9"/>
+                        <TextField fx:id="txtExternoPrecio" promptText="Precio unitario" prefColumnCount="9"/>
+                    </HBox>
+                </VBox>
+                <Label fx:id="lblStockInfo" styleClass="pagina-sub" wrapText="true"/>
+            </VBox>
+
+            <Label fx:id="lblAlertaStock" styleClass="error-resumen" wrapText="true" visible="false" managed="false"/>
+            <TableView fx:id="tablaDetalles" VBox.vgrow="ALWAYS" styleClass="striped" minHeight="85" prefHeight="130">
+                <columns>
+                    <TableColumn fx:id="colDTipo" text="Tipo" minWidth="70.0" prefWidth="80.0"/>
+                    <TableColumn fx:id="colDDescripcion" text="Descripción" minWidth="140.0" prefWidth="190.0"/>
+                    <TableColumn fx:id="colDCantidad" text="Cant." minWidth="45.0" prefWidth="50.0"/>
+                    <TableColumn fx:id="colDPrecio" text="Precio" minWidth="125.0" prefWidth="130.0"/>
+                    <TableColumn fx:id="colDSubtotal" text="Subtotal" minWidth="125.0" prefWidth="130.0"/>
+                </columns>
+            </TableView>
+            <Label text="Doble clic en una fila para editarla" styleClass="pagina-sub"/>
+
+            <FlowPane hgap="8" vgap="6" alignment="CENTER_LEFT">
+                <Button fx:id="btnQuitar" text="Quitar partida" onAction="#onQuitarDetalle"
+                        minWidth="-Infinity" styleClass="danger,accion-secundaria"/>
+                <Button fx:id="btnTrazabilidad" text="Trazabilidad" onAction="#onTrazabilidad"
+                        minWidth="-Infinity" styleClass="button-outlined,accion-secundaria"/>
+                <Button text="WhatsApp" onAction="#onWhatsApp"
+                        minWidth="-Infinity" styleClass="success,accion-secundaria"/>
+            </FlowPane>
+            <FlowPane hgap="8" vgap="5" alignment="CENTER_LEFT">
+                <Label fx:id="lblSubtotal" minWidth="-Infinity" styleClass="importe"/>
+                <Label text="Descuento (S/)"/>
+                <TextField fx:id="txtDescuento" promptText="0.00" prefColumnCount="11" accessibleText="Descuento en soles"/>
+            </FlowPane>
+            <Label fx:id="lblGanancia" styleClass="pagina-sub,importe" wrapText="true" visible="false" managed="false"/>
+                </VBox>
+                </ScrollPane>
+            </Tab>
+            <Tab fx:id="tabFotos" text="Fotos">
+                <fx:include fx:id="fotosView" source="orden-fotos-view.fxml"/>
+            </Tab>
+        </TabPane>
+    </SplitPane>
+
+    <FlowPane fx:id="barraImportes" styleClass="tarjeta,barra-importes" hgap="18" vgap="6" alignment="CENTER_LEFT">
+        <Label fx:id="lblTotal" minWidth="-Infinity" styleClass="total,importe"/>
+        <Label fx:id="lblCobrado" minWidth="-Infinity" styleClass="importe"/>
+        <Label fx:id="lblSaldo" minWidth="-Infinity" styleClass="importe"/>
+        <Label fx:id="lblAFavor" minWidth="-Infinity" styleClass="importe" visible="false" managed="false"/>
+    </FlowPane>
+
+    <HBox styleClass="barra-estado">
+        <padding><Insets top="8.0" right="4.0" bottom="4.0" left="4.0"/></padding>
+        <Label fx:id="lblEstado" text="Listo."/>
+    </HBox>
+</VBox>

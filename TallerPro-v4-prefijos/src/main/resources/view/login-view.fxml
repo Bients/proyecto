@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/17"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.ejemplo.tallerpro.controller.LoginController"
+           styleClass="login-fondo"
+           prefWidth="460.0" prefHeight="640.0">
+    <padding><Insets top="30.0" right="30.0" bottom="30.0" left="30.0"/></padding>
+
+    <VBox styleClass="login-tarjeta" spacing="12.0" alignment="TOP_CENTER" maxWidth="400.0" maxHeight="-Infinity">
+        <ImageView fitWidth="84.0" fitHeight="84.0" preserveRatio="true">
+            <image><Image url="@../img/icono.png"/></image>
+        </ImageView>
+        <HBox alignment="CENTER">
+            <Label text="Taller" styleClass="pagina-titulo"/>
+            <Label text="Pro" styleClass="pagina-titulo" style="-fx-text-fill: #f97316;"/>
+        </HBox>
+        <Label fx:id="lblTitulo" text="Iniciar sesión" styleClass="login-titulo"/>
+        <Label fx:id="lblSubtitulo" text="" styleClass="pagina-sub" wrapText="true"/>
+
+        <VBox fx:id="boxNombre" spacing="4.0">
+            <Label text="Nombre completo"/>
+            <TextField fx:id="txtNombre" promptText="Ej. Juan Pérez"/>
+        </VBox>
+        <VBox spacing="4.0">
+            <Label text="Usuario"/>
+            <TextField fx:id="txtUsuario" promptText="Ej. admin"/>
+        </VBox>
+        <VBox spacing="4.0">
+            <Label text="Contraseña"/>
+            <PasswordField fx:id="pwdClave"/>
+        </VBox>
+        <VBox fx:id="boxClave2" spacing="4.0">
+            <Label text="Repite la contraseña"/>
+            <PasswordField fx:id="pwdClave2"/>
+        </VBox>
+
+        <Label fx:id="lblError" text="" styleClass="login-error" wrapText="true"/>
+
+        <Button fx:id="btnAccion" text="Entrar" onAction="#onAccion" styleClass="accent"
+                defaultButton="true" maxWidth="Infinity" prefHeight="40.0"/>
+    </VBox>
+</StackPane>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import com.ejemplo.tallerpro.util.ComboBuscable?>
+<?import com.ejemplo.tallerpro.util.PaginadorBusqueda?>
+<?import com.ejemplo.tallerpro.util.FiltrosOrdenBusqueda?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ejemplo.tallerpro.controller.HistorialController"
+      spacing="10.0">
+    <padding><Insets top="24.0" right="28.0" bottom="16.0" left="28.0"/></padding>
+
+    <VBox spacing="2.0">
+        <Label text="Historial del vehículo" styleClass="pagina-titulo"/>
+        <Label text="Consulta las visitas, el kilometraje y el trabajo realizado en un vehículo"
+               styleClass="pagina-sub"/>
+    </VBox>
+
+    <VBox styleClass="tarjeta" spacing="10.0">
+        <HBox spacing="12.0" alignment="CENTER_LEFT">
+            <Label text="Vehículo"/>
+            <ComboBuscable fx:id="cmbVehiculo" prefWidth="620.0" promptText="Selecciona un vehículo"/>
+        </HBox>
+        <Label fx:id="lblPropietario" text="" wrapText="true" styleClass="pagina-sub"/>
+        <HBox spacing="12.0">
+            <VBox spacing="2.0" HBox.hgrow="ALWAYS">
+                <Label fx:id="lblVisitas" text="0" styleClass="numero"/>
+                <Label text="Visitas al taller" styleClass="leyenda"/>
+            </VBox>
+            <VBox fx:id="tarjetaCobrado" spacing="2.0" HBox.hgrow="ALWAYS">
+                <Label fx:id="lblCobrado" text="S/ 0.00" styleClass="numero"/>
+                <Label text="Total cobrado" styleClass="leyenda"/>
+            </VBox>
+            <VBox fx:id="tarjetaPendiente" spacing="2.0" HBox.hgrow="ALWAYS">
+                <Label fx:id="lblPendiente" text="S/ 0.00" styleClass="numero-alerta"/>
+                <Label text="Saldo pendiente" styleClass="leyenda"/>
+            </VBox>
+            <VBox spacing="2.0" HBox.hgrow="ALWAYS">
+                <Label fx:id="lblKm" text="-" styleClass="numero"/>
+                <Label text="Kilometraje actual" styleClass="leyenda"/>
+            </VBox>
+        </HBox>
+    </VBox>
+
+    <FlowPane hgap="8" vgap="6" alignment="CENTER_LEFT">
+        <TextField fx:id="txtBuscar" prefWidth="176" promptText="Buscar visitas"
+                   accessibleText="Buscar número, problema o mecánico"/>
+        <FiltrosOrdenBusqueda fx:id="filtrosBusqueda"/>
+        <Label fx:id="lblBusqueda" styleClass="error-resumen" wrapText="true"/>
+    </FlowPane>
+    <VBox spacing="10" VBox.vgrow="ALWAYS">
+        <VBox styleClass="tarjeta" spacing="8.0" VBox.vgrow="ALWAYS">
+            <Label text="Línea de tiempo (de la más reciente a la más antigua)" styleClass="tarjeta-titulo"/>
+            <TableView fx:id="tabla" VBox.vgrow="ALWAYS" minHeight="105" styleClass="striped">
+                <columns>
+                    <TableColumn fx:id="colId" text="Orden" prefWidth="84.0"/>
+                    <TableColumn fx:id="colFecha" text="Fecha" prefWidth="90.0"/>
+                    <TableColumn fx:id="colKm" text="Km" prefWidth="90.0"/>
+                    <TableColumn fx:id="colEstado" text="Estado" prefWidth="115.0"/>
+                    <TableColumn fx:id="colClienteHistorico" text="Cliente en la orden" prefWidth="140"/>
+                    <TableColumn fx:id="colProblema" text="Problema" prefWidth="190.0"/>
+                    <TableColumn fx:id="colMecanico" text="Mecánico" prefWidth="110.0"/>
+                    <TableColumn fx:id="colTotal" text="Total" prefWidth="85.0"/>
+                    <TableColumn fx:id="colPago" text="Pago" prefWidth="80.0"/>
+                    <TableColumn fx:id="colCobrado" text="Cobrado" prefWidth="85.0"/>
+                    <TableColumn fx:id="colPendiente" text="Pendiente" prefWidth="85.0"/>
+                </columns>
+            </TableView>
+            <PaginadorBusqueda fx:id="paginador"/>
+        </VBox>
+        <VBox fx:id="fichaVisita" styleClass="tarjeta,barra-importes" spacing="6">
+            <Label fx:id="lblVisita" styleClass="tarjeta-titulo"/>
+            <TableView fx:id="tablaDetalles" prefHeight="115" minHeight="92" styleClass="striped">
+                <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN"/></columnResizePolicy>
+                <columns>
+                    <TableColumn fx:id="colDTipo" text="Tipo" minWidth="100" prefWidth="122"/>
+                    <TableColumn fx:id="colDDescripcion" text="Descripción" minWidth="240" prefWidth="400"/>
+                    <TableColumn fx:id="colDCantidad" text="Cantidad" minWidth="90" prefWidth="100"/>
+                    <TableColumn fx:id="colDSubtotal" text="Subtotal" minWidth="125" prefWidth="135"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </VBox>
+</VBox>

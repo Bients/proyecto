@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.ejemplo.tallerpro.controller.AjustesController"
+            fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent;">
+    <VBox spacing="14.0">
+        <padding><Insets top="24.0" right="28.0" bottom="16.0" left="28.0"/></padding>
+
+        <VBox spacing="2.0">
+            <Label fx:id="lblTitulo" text="Ajustes y respaldos" styleClass="pagina-titulo"/>
+            <Label fx:id="lblDescripcion" text="Claves de IA y DNI, contraseña, copias de seguridad y exportación a Excel"
+                   styleClass="pagina-sub" wrapText="true"/>
+            <Label fx:id="lblVersion" styleClass="leyenda"/>
+        </VBox>
+
+        <VBox fx:id="boxIa" styleClass="tarjeta" spacing="10.0" maxWidth="760.0">
+            <Label text="Asistente de IA: clave de API" styleClass="tarjeta-titulo"/>
+            <Label fx:id="lblApiKey" text="" styleClass="pagina-sub" wrapText="true"/>
+            <HBox spacing="10.0">
+                <PasswordField fx:id="pwdApiKey" promptText="Pega aquí tu clave de API" HBox.hgrow="ALWAYS"/>
+                <Button text="Guardar" onAction="#onGuardarApiKey" styleClass="accent"/>
+                <Button text="Quitar" onAction="#onQuitarApiKey" styleClass="button-outlined"/>
+                <Button fx:id="btnProbar" text="Probar conexión" onAction="#onProbarConexion" styleClass="button-outlined"/>
+            </HBox>
+            <Label text="Se crea en console.anthropic.com > API Keys (cuenta de API con saldo) y empieza con sk-ant-. No es la contraseña ni la suscripción de Claude.ai. Se guarda solo en este equipo." styleClass="leyenda" wrapText="true"/>
+        </VBox>
+
+        <VBox fx:id="boxDni" styleClass="tarjeta" spacing="10.0" maxWidth="760.0">
+            <Label text="Consulta externa de DNI · Decolecta" styleClass="tarjeta-titulo"/>
+            <Label fx:id="lblDniToken" styleClass="pagina-sub" wrapText="true"/>
+            <HBox spacing="10.0">
+                <PasswordField fx:id="pwdDniToken" promptText="Token de Decolecta" HBox.hgrow="ALWAYS"/>
+                <Button text="Guardar y activar" onAction="#onGuardarDniToken" styleClass="accent"/>
+                <Button text="Desactivar" onAction="#onQuitarDniToken" styleClass="button-outlined"/>
+            </HBox>
+            <Label text="Al activar, TallerPro envía a Decolecta los DNI que aún no están en la base local para completar nombres y apellidos."
+                   styleClass="leyenda" wrapText="true"/>
+        </VBox>
+
+        <VBox styleClass="tarjeta" spacing="10.0" maxWidth="760.0">
+            <Label text="Cambiar mi contraseña" styleClass="tarjeta-titulo"/>
+            <PasswordField fx:id="pwdActual" promptText="Contraseña actual"/>
+            <HBox spacing="10.0">
+                <PasswordField fx:id="pwdNueva" promptText="Nueva contraseña (mín. 10)" HBox.hgrow="ALWAYS"/>
+                <PasswordField fx:id="pwdNueva2" promptText="Repite la nueva" HBox.hgrow="ALWAYS"/>
+            </HBox>
+            <HBox>
+                <Button text="Cambiar contraseña" onAction="#onCambiarClave" styleClass="accent"/>
+            </HBox>
+        </VBox>
+
+        <VBox fx:id="boxRespaldo" styleClass="tarjeta" spacing="10.0" maxWidth="760.0">
+            <Label text="Respaldo de base y fotos" styleClass="tarjeta-titulo"/>
+            <Label fx:id="lblRespaldo" text="" styleClass="pagina-sub" wrapText="true"/>
+            <HBox spacing="10.0">
+                <Button text="Crear copia ahora…" onAction="#onCrearCopia" styleClass="accent"/>
+                <Button text="Restaurar una copia…" onAction="#onRestaurar" styleClass="button-outlined"/>
+            </HBox>
+        </VBox>
+
+        <VBox fx:id="boxExcel" styleClass="tarjeta" spacing="10.0" maxWidth="760.0">
+            <Label text="Exportar a Excel" styleClass="tarjeta-titulo"/>
+            <Label text="Genera un libro .xlsx con clientes, vehículos, órdenes, servicios e inventario."
+                   styleClass="pagina-sub" wrapText="true"/>
+            <HBox>
+                <Button text="Exportar datos…" onAction="#onExportarExcel" styleClass="accent"/>
+            </HBox>
+        </VBox>
+
+        <HBox styleClass="barra-estado">
+            <padding><Insets top="8.0" right="4.0" bottom="4.0" left="4.0"/></padding>
+            <Label fx:id="lblEstado" text="Listo."/>
+        </HBox>
+    </VBox>
+</ScrollPane>

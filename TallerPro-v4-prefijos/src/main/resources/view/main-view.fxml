@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:id="raizPrincipal" fx:controller="com.ejemplo.tallerpro.controller.MainController"
+            styleClass="root-pane"
+            prefWidth="1320.0" prefHeight="800.0">
+
+    <left>
+        <ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER"
+                    minWidth="236" prefWidth="236" maxWidth="236" styleClass="sidebar-scroll">
+        <VBox styleClass="sidebar" spacing="2.0">
+            <HBox alignment="BASELINE_LEFT">
+                <Label text="Taller" styleClass="brand-a"/>
+                <Label text="Pro" styleClass="brand-b"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="btnGuia" text="Guía de uso" onAction="#onGuia" minWidth="-Infinity"
+                        styleClass="nav-secundario,nav-guia"/>
+            </HBox>
+            <Label text="Gestión de taller automotriz" styleClass="brand-sub"/>
+
+            <Label text="TRABAJO DIARIO" styleClass="nav-titulo"/>
+            <Button fx:id="navTablero" text="Tablero" onAction="#irTablero" styleClass="nav-item"/>
+            <Button fx:id="navOrdenes" text="Órdenes de trabajo" onAction="#irOrdenes" styleClass="nav-item"/>
+            <Button fx:id="navInspeccion" text="Inspección" onAction="#irInspeccion" styleClass="nav-item"/>
+            <Button fx:id="navDiagnostico" text="Diagnóstico" onAction="#irDiagnostico" styleClass="nav-item"/>
+
+            <Label fx:id="tituloSeguimiento" text="CLIENTES Y VEHÍCULOS" styleClass="nav-titulo"/>
+            <Button fx:id="navClientes" text="Clientes" onAction="#irClientes" styleClass="nav-item"/>
+            <Button fx:id="navVehiculos" text="Vehículos" onAction="#irVehiculos" styleClass="nav-item"/>
+            <Button fx:id="navHistorial" text="Historial del vehículo" onAction="#irHistorial" styleClass="nav-item"/>
+            <Button fx:id="navMantenimiento" text="Mantenimiento" onAction="#irMantenimiento" styleClass="nav-item"/>
+
+            <VBox fx:id="grupoInventario" spacing="2">
+                <Label text="INVENTARIO" styleClass="nav-titulo"/>
+                <Button fx:id="navRepuestos" text="Repuestos" onAction="#irRepuestos" styleClass="nav-item"/>
+                <Button fx:id="navCompras" text="Compras" onAction="#irCompras" styleClass="nav-item"/>
+                <Button fx:id="navKardex" text="Kardex" onAction="#irKardex" styleClass="nav-item"/>
+            </VBox>
+
+            <Label fx:id="tituloAdministracion" text="ADMINISTRACIÓN" styleClass="nav-titulo"/>
+            <Button fx:id="navAjustes" text="Ajustes y respaldos" onAction="#irAjustes" styleClass="nav-item"/>
+            <Button fx:id="navUsuarios" text="Usuarios" onAction="#irUsuarios" styleClass="nav-item"/>
+
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <Label fx:id="lblUsuario" text="Usuario" styleClass="sidebar-usuario"/>
+            <Label fx:id="lblRol" text="Rol" styleClass="sidebar-rol"/>
+            <Region prefHeight="6.0"/>
+            <Button fx:id="btnTema" text="Modo oscuro" onAction="#onTema" styleClass="nav-secundario"/>
+            <Button text="Cerrar sesión" onAction="#onCerrarSesion" styleClass="nav-secundario"/>
+        </VBox>
+        </ScrollPane>
+    </left>
+
+    <center>
+        <VBox>
+            <fx:include fx:id="guia" source="guia-view.fxml"/>
+            <StackPane fx:id="contenido" VBox.vgrow="ALWAYS" minHeight="0"/>
+        </VBox>
+    </center>
+</BorderPane>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import com.ejemplo.tallerpro.util.PaginadorBusqueda?>
+<?import com.ejemplo.tallerpro.util.ComboBuscable?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ejemplo.tallerpro.controller.VehiculoController"
+      spacing="10.0">
+    <padding><Insets top="20.0" right="28.0" bottom="10.0" left="28.0"/></padding>
+
+    <VBox spacing="2.0">
+        <Label text="Vehículos" styleClass="pagina-titulo"/>
+        <Label text="Placa, marca, modelo, kilometraje y propietario" styleClass="pagina-sub"/>
+    </VBox>
+
+    <VBox fx:id="listado" styleClass="tarjeta" spacing="10.0" VBox.vgrow="ALWAYS">
+        <Label text="Vehículos" styleClass="tarjeta-titulo"/>
+        <HBox spacing="10.0" alignment="CENTER_LEFT">
+            <Button fx:id="btnNuevo" text="Nuevo" onAction="#abrirNuevo" minWidth="-Infinity" styleClass="button-outlined,accion-principal"/>
+                <TextField fx:id="txtBuscar" prefWidth="280.0"
+                       promptText="Buscar por placa, marca, modelo o cliente"/>
+        </HBox>
+        <TableView fx:id="tabla" VBox.vgrow="ALWAYS" minHeight="110" styleClass="striped">
+            <columns>
+                <TableColumn fx:id="colPlaca" text="Placa" prefWidth="100.0"/>
+                <TableColumn fx:id="colMarca" text="Marca" prefWidth="115"/>
+                <TableColumn fx:id="colModelo" text="Modelo" prefWidth="126"/>
+                <TableColumn fx:id="colAnio" text="Año" prefWidth="70.0"/>
+                <TableColumn fx:id="colKm" text="Km" prefWidth="85"/>
+                <TableColumn fx:id="colCliente" text="Propietario" prefWidth="250"/>
+            </columns>
+        </TableView>
+        <PaginadorBusqueda fx:id="paginador"/>
+    </VBox>
+
+    <VBox fx:id="ficha" styleClass="tarjeta,ficha-datos" spacing="8.0">
+        <Label text="Datos del vehículo" styleClass="tarjeta-titulo"/>
+
+        <GridPane hgap="14.0" vgap="7.0">
+            <columnConstraints>
+                <ColumnConstraints minWidth="90.0"/>
+                <ColumnConstraints prefWidth="240.0"/>
+                <ColumnConstraints minWidth="90.0"/>
+                <ColumnConstraints prefWidth="240.0"/>
+            </columnConstraints>
+
+            <Label text="Placa *" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtPlaca" promptText="Ej. ABC-123"
+                       GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="Marca *" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtMarca" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="Modelo *" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+            <TextField fx:id="txtModelo" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+
+            <Label text="Año *" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtAnio" promptText="Ej. 2018"
+                       GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+            <Label text="Kilometraje *" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+            <TextField fx:id="txtKm" promptText="Ej. 45000"
+                       GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+
+            <Label text="Propietario *" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <ComboBuscable fx:id="cmbCliente" maxWidth="Infinity" promptText="Selecciona un cliente"
+                      GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.columnSpan="3"/>
+            <Label text="Carrocería" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+            <ComboBox fx:id="cmbCarroceria" prefWidth="240" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+        </GridPane>
+
+        <FlowPane hgap="10" vgap="6" alignment="CENTER_LEFT">
+            <Button text="Guardar" onAction="#onGuardar" minWidth="-Infinity" styleClass="accent,accion-principal"/>
+            <Button fx:id="btnEliminar" text="Eliminar" onAction="#onEliminar" minWidth="-Infinity" styleClass="danger,accion-secundaria"/>
+        </FlowPane>
+    </VBox>
+
+    <HBox styleClass="barra-estado">
+        <padding><Insets top="8.0" right="4.0" bottom="8.0" left="4.0"/></padding>
+        <Label fx:id="lblEstado" text="Listo."/>
+    </HBox>
+</VBox>

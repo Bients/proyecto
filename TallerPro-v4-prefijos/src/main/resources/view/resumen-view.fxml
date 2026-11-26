@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.ejemplo.tallerpro.util.PaginadorBusqueda?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.ejemplo.tallerpro.controller.ResumenController"
+            fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent;">
+    <fx:define><ToggleGroup fx:id="vistaOrdenes"/></fx:define>
+    <VBox spacing="14.0">
+        <padding><Insets top="22" right="28" bottom="20" left="28"/></padding>
+        <HBox spacing="12" alignment="BASELINE_LEFT">
+            <Label text="Tablero" styleClass="pagina-titulo"/>
+            <Label fx:id="lblDia" styleClass="pagina-sub"/>
+        </HBox>
+
+        <FlowPane hgap="10" vgap="6" alignment="CENTER_LEFT">
+            <Button fx:id="btnNuevaOrden" text="Nueva orden" onAction="#onNuevaOrden"
+                    minWidth="-Infinity" styleClass="accent,accion-principal"/>
+            <TextField fx:id="txtBuscar" promptText="Buscar por placa" accessibleText="Buscar órdenes por placa" prefWidth="235"/>
+            <Button text="Actualizar" onAction="#recargar" minWidth="-Infinity"
+                    styleClass="button-outlined,accion-secundaria"/>
+        </FlowPane>
+
+        <VBox styleClass="tarjeta" spacing="10">
+            <FlowPane hgap="18" vgap="6" alignment="CENTER_LEFT">
+                <RadioButton fx:id="rbPendientes" text="Pendientes" toggleGroup="$vistaOrdenes"
+                             selected="true" onAction="#onCambiarVista"/>
+                <RadioButton fx:id="rbIngresosHoy" text="Ingresos de hoy" toggleGroup="$vistaOrdenes"
+                             onAction="#onCambiarVista"/>
+            </FlowPane>
+            <TableView fx:id="tabla" prefHeight="343" styleClass="striped" visible="false" managed="false">
+                <columns>
+                    <TableColumn fx:id="colNumero" text="Orden" minWidth="80" prefWidth="100" sortable="false"/>
+                    <TableColumn fx:id="colPlaca" text="Placa" minWidth="80" prefWidth="95" sortable="false"/>
+                    <TableColumn fx:id="colClienteMotivo" text="Cliente y motivo" minWidth="170" prefWidth="300" sortable="false"/>
+                    <TableColumn fx:id="colEstado" text="Estado" minWidth="124" prefWidth="135" sortable="false"/>
+                    <TableColumn fx:id="colDias" text="Días" minWidth="54" prefWidth="60" sortable="false"/>
+                    <TableColumn fx:id="colPago" text="Pago" minWidth="90" prefWidth="110" sortable="false"/>
+                    <TableColumn fx:id="colAbrir" minWidth="91" prefWidth="91" sortable="false"/>
+                </columns>
+            </TableView>
+            <PaginadorBusqueda fx:id="paginador" visible="false" managed="false"/>
+            <VBox fx:id="estadoVacio" spacing="8" alignment="CENTER_LEFT">
+                <Label fx:id="lblEstado" text="Buscando órdenes…" styleClass="pagina-sub" wrapText="true"/>
+                <Button fx:id="btnRegistrarVehiculo" text="Registrar vehículo" onAction="#onRegistrarVehiculo"
+                        minWidth="-Infinity" styleClass="button-outlined,accion-secundaria" visible="false" managed="false"/>
+            </VBox>
+        </VBox>
+
+        <Label fx:id="lblAlertas" styleClass="error-resumen" wrapText="true" visible="false" managed="false"/>
+
+        <TitledPane fx:id="panelResumen" text="Caja y estadísticas" expanded="false" animated="false">
+            <VBox spacing="12">
+                <VBox fx:id="bloqueCaja" spacing="8">
+                    <FlowPane hgap="16" vgap="6" alignment="CENTER_LEFT">
+                        <Label fx:id="lblPorCobrar" minWidth="-Infinity" styleClass="importe"/>
+                        <Label fx:id="lblCobrado" minWidth="-Infinity" styleClass="importe"/>
+                    </FlowPane>
+                    <FlowPane hgap="10" vgap="6" alignment="CENTER_LEFT">
+                        <Label text="Cierre de caja" styleClass="tarjeta-titulo"/>
+                        <DatePicker fx:id="dpCaja" accessibleText="Fecha del cierre de caja"/>
+                        <Label fx:id="lblCaja" minWidth="-Infinity" styleClass="leyenda,importe"/>
+                    </FlowPane>
+                    <VBox fx:id="cajaMetodos" spacing="3"/>
+                </VBox>
+                <HBox spacing="12">
+                    <VBox fx:id="tarjetaIngresos" HBox.hgrow="ALWAYS" prefWidth="470">
+                        <BarChart fx:id="graficoIngresos" animated="false" legendVisible="false"
+                                  title="Cobros netos por mes" prefHeight="265">
+                            <xAxis><CategoryAxis/></xAxis>
+                            <yAxis><NumberAxis/></yAxis>
+                        </BarChart>
+                    </VBox>
+                    <VBox HBox.hgrow="ALWAYS" prefWidth="380">
+                        <PieChart fx:id="graficoServicios" animated="false" title="Servicios más pedidos"
+                                  legendSide="BOTTOM" labelsVisible="false" prefHeight="265"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+        </TitledPane>
+    </VBox>
+</ScrollPane>
